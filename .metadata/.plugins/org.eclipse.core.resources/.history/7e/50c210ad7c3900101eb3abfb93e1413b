@@ -1,0 +1,32 @@
+package com.chatapp.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.chatapp.entities.Room;
+import com.chatapp.services.RoomService;
+
+@RestController
+@RequestMapping("/api/rooms")
+public class RoomController {
+
+	@Autowired
+	private RoomService service;
+	
+	
+	
+	public RoomController(RoomService service) {
+		this.service = service;
+	}
+
+
+
+	@PostMapping()
+	public Room createRoom(@RequestBody String roomId) {
+		return ;
+	}
+	
+}

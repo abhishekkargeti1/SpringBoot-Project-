@@ -1,0 +1,5 @@
+package com.chatapp.entities;
+
+public class Room {
+
+}

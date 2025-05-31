@@ -1,0 +1,20 @@
+package com.chatapp.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import com.chatapp.dao.RoomDao;
+
+@Controller
+public class ChatController {
+
+	@Autowired
+	RoomDao dao;
+
+	public ChatController(RoomDao dao) {
+		super();
+		this.dao = dao;
+	}
+	
+	
+}
