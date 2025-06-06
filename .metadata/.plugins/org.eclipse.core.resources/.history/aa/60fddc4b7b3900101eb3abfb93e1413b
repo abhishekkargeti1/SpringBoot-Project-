@@ -1,7 +1,0 @@
-package com.chatapp.dao;
-
-import org.springframework.data.mongodb.repository.MongoRepository;
-
-public interface RoomDao extends MongoRepository<Room, String> {
-
-}

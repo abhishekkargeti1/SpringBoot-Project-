@@ -1,5 +1,0 @@
-package com.chatapp.payload;
-
-public class MessageRequest {
-
-}
