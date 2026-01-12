@@ -18,6 +18,7 @@ import com.org.QuickRide.dto.DriverLoginDTO;
 import com.org.QuickRide.dto.DriverRegistrationDetailsDTO;
 import com.org.QuickRide.helper.EmailService;
 import com.org.QuickRide.helper.FileUploadService;
+import com.org.QuickRide.security.JwtFilter;
 import com.org.QuickRide.serviceimpl.DriverRegistrationServiceImpl;
 
 @RestController
@@ -31,6 +32,8 @@ public class DriverRegistrationController {
 	private FileUploadService fileUploadService;
 	boolean status = false;
 	private EmailService email = new EmailService();
+	@Autowired
+	JwtFilter filter;
 
 	@PostMapping(value = "/driverRegistration")
 	public ResponseEntity<?> getDriverRegistration(@ModelAttribute DriverRegistrationDetailsDTO detailsDTO) {
@@ -72,35 +75,21 @@ public class DriverRegistrationController {
 				}
 
 				if (status) {
-					
-					
+
 					String subject = "Welcome to QUICK Ride – Registration Successful";
 
-					
-					String message =
-					        "Dear Driver,\n\n"
-					      + "Welcome to QUICK Ride!\n\n"
-					      + "We’re excited to inform you that your registration on the QUICK Ride platform has been successfully completed.\n\n"
-					      + "You are now part of our growing network of trusted drivers. QUICK Ride is committed to providing a seamless, reliable, and secure ride experience for both drivers and customers.\n\n"
-					      + "Your User Id is: " + detailsDTO.getEmail() + "\n"
-					      + "Password is: d4ng3r\n\n"
-					      + "Important Note:\n"
-					      + "Please ensure that all the information and documents you provided are accurate and up to date. Any discrepancy may delay account activation.\n\n"
-					      + "If you have any questions or require assistance, feel free to contact our support team.\n\n"
-					      + "Thank you for choosing QUICK Ride. We look forward to working with you and wish you a safe and successful journey ahead.\n\n"
-					      + "Warm regards,\n"
-					      + "Team QUICK Ride\n"
-					      + "Support Team";
+					String message = "Dear Driver,\n\n" + "Welcome to QUICK Ride!\n\n"
+							+ "We’re excited to inform you that your registration on the QUICK Ride platform has been successfully completed.\n\n"
+							+ "You are now part of our growing network of trusted drivers. QUICK Ride is committed to providing a seamless, reliable, and secure ride experience for both drivers and customers.\n\n"
+							+ "Your User Id is: " + detailsDTO.getEmail() + "\n" + "Password is: d4ng3r\n\n"
+							+ "Important Note:\n"
+							+ "Please ensure that all the information and documents you provided are accurate and up to date. Any discrepancy may delay account activation.\n\n"
+							+ "If you have any questions or require assistance, feel free to contact our support team.\n\n"
+							+ "Thank you for choosing QUICK Ride. We look forward to working with you and wish you a safe and successful journey ahead.\n\n"
+							+ "Warm regards,\n" + "Team QUICK Ride\n" + "Support Team";
 
-					
-					
-					
 					email.mailSender(message, subject, detailsDTO.getEmail());
-					
-					
-					
-					
-					
+
 					response.put("status", status);
 					return ResponseEntity.status(HttpStatus.OK).body(response);
 
@@ -115,24 +104,17 @@ public class DriverRegistrationController {
 
 		}
 	}
-	
+
 	@PostMapping("/driverLogin")
-	public ResponseEntity<?> getDriverLogin(@RequestBody DriverLoginDTO driverLoginDTO){
+	public ResponseEntity<?> getDriverLogin(@RequestBody DriverLoginDTO driverLoginDTO) {
 		Map<String, Object> response = new HashMap<>();
-		
-		
-		System.out.println("Driver Login Credential "+driverLoginDTO);
-		
 		DriverRegistrationDetailsDTO driverLogin = driverRegistrationServiceImpl.getDriverLogin(driverLoginDTO);
-		
-		response.put("Driver Details", driverLogin);
-		
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-		
+		if (driverLogin != null) {
+			String token = filter.generateToken(driverLogin.getEmail());
+			response.put("token", token);
+			response.put("Driver Details", driverLogin);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
-	
-	
-	
-	
-	
+
 }

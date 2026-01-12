@@ -2,6 +2,8 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="D:\Spring Boot Project\Quick Ride"/>
+			<item value="D:\Spring Boot Project\Quick Ride\Vehicle-Request-Allocation-backend"/>
 			<item value="D:\Java Backend Projects\Vehicle-Request-Allocation-backend"/>
 		</list>
 		<list key="projectNameTemplate">

@@ -2,6 +2,8 @@ package com.org.QuickRide.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
 import lombok.ToString;
 
@@ -14,6 +16,7 @@ public class CarDetailsDTO {
 	private int driverId;
 	private String carRegistrationNumber;
 	private String yearOfExpire;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private MultipartFile registrationCard;
 	private String registrationCardFileName;
 	

@@ -101,7 +101,7 @@ public class DriverRegistrationServiceImpl implements DriverRegistrationService 
 			} else {
 				throw new RuntimeException("Something Went Wrong in Find Vehicle Type");
 			}
-			System.out.println("Driver Details " + driverDetailsEntity);
+			//System.out.println("Driver Details " + driverDetailsEntity);
 			DriverRegistrationDetailsDTO driverDetailsDTO = DriverDetailsMapper
 					.getDriverDetailsDTO(driverDetailsEntity);
 			return driverDetailsDTO;

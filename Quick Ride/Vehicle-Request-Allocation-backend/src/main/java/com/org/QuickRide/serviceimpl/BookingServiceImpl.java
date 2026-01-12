@@ -93,7 +93,7 @@ public class BookingServiceImpl implements BookingService {
 				bookingDetails.getStatus());
 
 		BookingDetailsEntity bookingSavedDetails = bookingDetailsRepo.save(bookingDetailsEntity);
-
+			System.out.println("Booking Id "+ bookingSavedDetails);
 		if (bookingSavedDetails != null) {
 			DriverDutyEntity driverDetailsById = driverDutyRepo.findByDriverId(bookingDetails.getDriverId());
 

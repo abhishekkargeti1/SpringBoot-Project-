@@ -120,8 +120,8 @@
             </children>
             <children xsi:type="basic:PartSashContainer" xmi:id="_CR-eja81EfCu6an5LQ7ArA" containerData="7500">
               <children xsi:type="basic:PartSashContainer" xmi:id="_CR-ejq81EfCu6an5LQ7ArA" containerData="7500" horizontal="true">
-                <children xsi:type="advanced:Placeholder" xmi:id="_CR-ej681EfCu6an5LQ7ArA" elementId="org.eclipse.ui.editorss" containerData="7500" ref="_CRv1AK81EfCu6an5LQ7ArA"/>
-                <children xsi:type="basic:PartStack" xmi:id="_CR-ekK81EfCu6an5LQ7ArA" elementId="right" containerData="2500" selectedElement="_CR-eka81EfCu6an5LQ7ArA">
+                <children xsi:type="advanced:Placeholder" xmi:id="_CR-ej681EfCu6an5LQ7ArA" elementId="org.eclipse.ui.editorss" containerData="7607" ref="_CRv1AK81EfCu6an5LQ7ArA"/>
+                <children xsi:type="basic:PartStack" xmi:id="_CR-ekK81EfCu6an5LQ7ArA" elementId="right" containerData="2393" selectedElement="_CR-eka81EfCu6an5LQ7ArA">
                   <tags>org.eclipse.e4.secondaryNavigationStack</tags>
                   <children xsi:type="advanced:Placeholder" xmi:id="_CR-eka81EfCu6an5LQ7ArA" elementId="org.eclipse.ui.views.ContentOutline" ref="_CR0tgK81EfCu6an5LQ7ArA" closeable="true">
                     <tags>View</tags>
@@ -380,7 +380,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_CQURoK81EfCu6an5LQ7ArA" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_7gWKoNyPEfC3vpt87p8kWw" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.svg" tooltip="Print" command="_CEmKga81EfCu6an5LQ7ArA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_hq5gMOyhEfC8DeC5ZQsThg" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.svg" tooltip="Print" command="_CEmKga81EfCu6an5LQ7ArA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_CQURoa81EfCu6an5LQ7ArA" elementId="group.edit" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -388,8 +388,8 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_CQURo681EfCu6an5LQ7ArA" elementId="org.eclipse.ui.workbench.edit">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_7gZ1ANyPEfC3vpt87p8kWw" elementId="undo" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/undo_edit.svg" tooltip="Undo" enabled="false" command="_CEkUqa81EfCu6an5LQ7ArA"/>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_7gbDINyPEfC3vpt87p8kWw" elementId="redo" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/redo_edit.svg" tooltip="Redo" enabled="false" command="_CEk79K81EfCu6an5LQ7ArA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_hq6uU-yhEfC8DeC5ZQsThg" elementId="undo" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/undo_edit.svg" tooltip="Undo" enabled="false" command="_CEkUqa81EfCu6an5LQ7ArA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_hq6uVOyhEfC8DeC5ZQsThg" elementId="redo" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/redo_edit.svg" tooltip="Redo" enabled="false" command="_CEk79K81EfCu6an5LQ7ArA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_CQURpK81EfCu6an5LQ7ArA" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -410,7 +410,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_CQU4sK81EfCu6an5LQ7ArA" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_7gk0INyPEfC3vpt87p8kWw" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.svg" tooltip="Pin Editor" enabled="false" type="Check" command="_CEmKOq81EfCu6an5LQ7ArA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_hq7VYOyhEfC8DeC5ZQsThg" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.svg" tooltip="Pin Editor" enabled="false" type="Check" command="_CEmKOq81EfCu6an5LQ7ArA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_CQU4sa81EfCu6an5LQ7ArA" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -2573,7 +2573,7 @@
   <addons xmi:id="_CD_F5q81EfCu6an5LQ7ArA" elementId="MinMax Addon" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.minmax.MinMaxAddon"/>
   <addons xmi:id="_CD_F5681EfCu6an5LQ7ArA" elementId="org.eclipse.ui.workbench.addon.0" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
   <addons xmi:id="_CEI20K81EfCu6an5LQ7ArA" elementId="SplitterAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.splitteraddon.SplitterAddon"/>
-  <addons xmi:id="_6sRpYdyPEfC3vpt87p8kWw" elementId="org.eclipse.ui.ide.addon.0" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
+  <addons xmi:id="_hXv6seyhEfC8DeC5ZQsThg" elementId="org.eclipse.ui.ide.addon.0" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
   <addons xmi:id="_dz0JgGOlEeSMMaPQU2nlzw" elementId="org.eclipse.ui.ide.application.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.ide.application" contributionURI="bundleclass://org.eclipse.ui.ide.application/org.eclipse.ui.internal.ide.application.addons.ModelCleanupAddon"/>
   <categories xmi:id="_CEdm8K81EfCu6an5LQ7ArA" elementId="org.eclipse.team.ui.category.team" name="Version control (Team)" description="Actions that apply when working with a version control system"/>
   <categories xmi:id="_CEdm8a81EfCu6an5LQ7ArA" elementId="org.eclipse.ui.category.views" name="Views" description="Commands for opening views"/>

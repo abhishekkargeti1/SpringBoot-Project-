@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+# Sensitive Spring Boot config
+src/main/resources/application.properties
+

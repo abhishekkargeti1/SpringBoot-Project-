@@ -47,7 +47,7 @@ public class BookingController {
 
 	@GetMapping("/bookingDetails/{bookingId}")
 	public ResponseEntity<?> getBookingDetails(@PathVariable String bookingId) {
-		System.out.println("Booking Details Id " + bookingId);
+		//System.out.println("Booking Details Id " + bookingId);
 		
 		List<BookingDetailsDTO> bookingDetails = bookingServiceImpl.getBookingDetails(bookingId);
 		
