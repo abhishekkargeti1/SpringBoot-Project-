@@ -26,7 +26,7 @@ public class BookingController {
 
 	@PostMapping("/bookingDetails")
 	public ResponseEntity<?> getBookingConfirmation(@RequestBody BookingDetailsDTO bookingDetails) {
-		//System.out.println("Booking Details " + bookingDetails);
+		System.out.println("Booking Details " + bookingDetails);
 
 		int bookingId = bookingServiceImpl.getBookingDetails(bookingDetails);
 
