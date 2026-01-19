@@ -2,6 +2,8 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Loginservice } from '../../services/loginservice';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-driver-login',
@@ -25,7 +27,12 @@ export class DriverLogin implements OnInit {
   userCaptchaInput: string = '';
   captchaQuestion: string = '';
 
-  constructor(private router: Router, private messageBox: MatSnackBar) {}
+  constructor(
+    private router: Router, 
+    private messageBox: MatSnackBar,
+    private loginService: Loginservice,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.generateCaptcha();
@@ -108,18 +115,114 @@ export class DriverLogin implements OnInit {
     }
 
     this.isLoading = true;
-    console.log('Driver Login Attempt:', this.email, this.password, this.rememberMe);
     
-    // TODO: Implement driver login API call
-    // Simulate API call
-    setTimeout(() => {
-      this.isLoading = false;
-      // TODO: Navigate to driver dashboard after successful login
-      // this.router.navigate(['/driver-dashboard']);
-      this.messageBox.open('Driver login functionality will be implemented with backend API', 'Close', { 
-        duration: 3000, 
-        panelClass: ['custom-snackbar'] 
-      });
-    }, 1000);
+    const loginDetails = {
+      userName: this.email,
+      password: this.password
+    };
+
+    // Call driver login API
+    this.loginService.getDriverLogin(loginDetails).subscribe(
+      (response: any) => {
+        console.log("Driver Login API Response:", response);
+        this.isLoading = false;
+        
+        // Extract data from response - API structure: { "Driver Details": {...}, "Car Details": {...}, "token": "..." }
+        // OR: { "Driver Details": {..., "Car Details": {...}}, "token": "..." }
+        const token = response.token || response.jwt_token || null;
+        
+        // First try to get Driver Details from root
+        let driverDetailsRaw = response['Driver Details'] || response['driver Details'] || response.driverDetails;
+        
+        // Extract Car Details - check root level first, then nested in Driver Details
+        let carDetails = response['Car Details'] || response['car Details'] || response.carDetails || null;
+        
+        // If Car Details is nested inside Driver Details, extract it
+        if (!carDetails && driverDetailsRaw) {
+          carDetails = driverDetailsRaw['Car Details'] || driverDetailsRaw['car Details'] || driverDetailsRaw.carDetails || null;
+        }
+        
+        // If we found carDetails nested, remove it from driverDetails to keep data clean
+        if (driverDetailsRaw && carDetails) {
+          driverDetailsRaw = { ...driverDetailsRaw };
+          if (driverDetailsRaw['Car Details']) delete driverDetailsRaw['Car Details'];
+          if (driverDetailsRaw['car Details']) delete driverDetailsRaw['car Details'];
+          if (driverDetailsRaw.carDetails) delete driverDetailsRaw.carDetails;
+        }
+        
+        const driverDetails = driverDetailsRaw;
+        
+        // Validate that we have the required data
+        if (!driverDetails) {
+          console.error('Driver details not found in response:', response);
+          console.log('Response keys:', Object.keys(response || {}));
+          this.messageBox.open("Invalid response format. Driver details not found.", "OK", {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            panelClass: ['custom-snackbar']
+          });
+          this.refreshCaptcha();
+          return;
+        }
+        
+        if (!token) {
+          console.error('Token not found in response:', response);
+          this.messageBox.open("Authentication token not received. Please try again.", "OK", {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            panelClass: ['custom-snackbar']
+          });
+          this.refreshCaptcha();
+          return;
+        }
+        
+        // Log extracted data for debugging
+        console.log('Extracted driver data:', {
+          hasDriverDetails: !!driverDetails,
+          hasCarDetails: !!carDetails,
+          carDetails: carDetails,
+          driverDetailsKeys: driverDetails ? Object.keys(driverDetails) : [],
+          carDetailsKeys: carDetails ? Object.keys(carDetails) : []
+        });
+        
+        // Store driver authentication data
+        this.authService.setDriverAuthData(token, driverDetails, carDetails || undefined);
+        
+        // Verify storage
+        const storedCarDetails = this.authService.getCarDetails();
+        console.log('Stored car details in auth service:', storedCarDetails);
+        
+        // Success message
+        this.messageBox.open("Login Successful! Redirecting to driver dashboard...", "OK", {
+          duration: 2000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['custom-snackbar', 'success-snackbar']
+        });
+
+        // Redirect to driver dashboard after successful login
+        setTimeout(() => {
+          this.router.navigate(['/driver-dashboard']);
+        }, 1000);
+      },
+      (error: any) => {
+        console.error('Driver login error:', error);
+        this.isLoading = false;
+        
+        // Handle error response
+        const errorMessage = error.error?.message || error.message || "Login failed. Please check your credentials and try again.";
+        this.messageBox.open(errorMessage, "OK", {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['custom-snackbar']
+        });
+        
+        // Refresh CAPTCHA on error
+        this.refreshCaptcha();
+      }
+    );
   }
 }

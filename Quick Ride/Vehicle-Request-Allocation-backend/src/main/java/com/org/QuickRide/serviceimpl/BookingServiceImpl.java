@@ -10,6 +10,7 @@ import com.org.QuickRide.customexception.ResourceNotFoundException;
 import com.org.QuickRide.dto.BookingDetailsDTO;
 import com.org.QuickRide.entities.BookingDetailsEntity;
 import com.org.QuickRide.entities.DriverDetailsEntity;
+import com.org.QuickRide.entities.DriverDutyDetails;
 import com.org.QuickRide.entities.DriverDutyEntity;
 import com.org.QuickRide.entities.DriverRatingEntity;
 import com.org.QuickRide.entities.RazorPayDetailsEntity;
@@ -18,9 +19,11 @@ import com.org.QuickRide.entities.VehicalTypeEntity;
 import com.org.QuickRide.helper.OTPGenerater;
 import com.org.QuickRide.helper.PasswordHashService;
 import com.org.QuickRide.mapper.BookingDetailsMapper;
+import com.org.QuickRide.mapper.DriverDutyDetailsMapper;
 import com.org.QuickRide.mapper.RazorPayDetailsMapper;
 import com.org.QuickRide.respositories.BookingDetailsRespository;
 import com.org.QuickRide.respositories.DriverDetailsRespository;
+import com.org.QuickRide.respositories.DriverDutyDetailsRespository;
 import com.org.QuickRide.respositories.DriverDutyRespository;
 import com.org.QuickRide.respositories.DriverRatingRespository;
 import com.org.QuickRide.respositories.RazorPayDetailsRepository;
@@ -44,6 +47,7 @@ public class BookingServiceImpl implements BookingService {
 	private VehicleDetailsRepository carDetailsRepository;
 
 	@Autowired
+	
 	private VehicleTypeRepository vehicleTypeRepository;
 
 	@Autowired
@@ -51,6 +55,9 @@ public class BookingServiceImpl implements BookingService {
 
 	@Autowired
 	private DriverRatingRespository driverRatingRespository;
+	
+	@Autowired
+	private DriverDutyDetailsRespository driverDutyDetailsRespository; 
 
 	@Override
 	public int getBookingDetails(BookingDetailsDTO bookingDetails) {
@@ -93,16 +100,29 @@ public class BookingServiceImpl implements BookingService {
 				bookingDetails.getStatus());
 
 		BookingDetailsEntity bookingSavedDetails = bookingDetailsRepo.save(bookingDetailsEntity);
-			System.out.println("Booking Id "+ bookingSavedDetails);
+		System.out.println("Booking Id " + bookingSavedDetails);
 		if (bookingSavedDetails != null) {
 			DriverDutyEntity driverDetailsById = driverDutyRepo.findByDriverId(bookingDetails.getDriverId());
 
 			driverDetailsById.setStatus("Assigned Booking");
 
 			DriverDutyEntity driverDutySavedDetails = driverDutyRepo.save(driverDetailsById);
-
+			DriverDutyDetails driverDutyDetails = DriverDutyDetailsMapper.getEntity(bookingDetails.getDriverId(), bookingDetails.getCustomerId(),
+					bookingDetails.getTo(), bookingDetails.getFrom(), bookingDetails.getAmountToPaid(),
+					bookingDetails.getPaymentType(), bookingDetails.getStatus(), bookingDetails.getDistance());
+			
+			
+			
+			
 			if (driverDutySavedDetails != null) {
-				return bookingSavedDetails.getId();
+				DriverDutyDetails driverDutyDetailsSaved = driverDutyDetailsRespository.save(driverDutyDetails);
+				
+				if(driverDutyDetailsSaved !=null) {
+					return bookingSavedDetails.getId();
+					
+				}else {	
+					throw new RuntimeException("Something Went Wrong in Driver Duty Storing in DB");
+				}				
 			} else {
 				throw new RuntimeException("Something Went Wrong in Driver Duty Assigning");
 			}

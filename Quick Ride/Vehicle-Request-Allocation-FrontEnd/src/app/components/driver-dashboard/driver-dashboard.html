@@ -1,0 +1,378 @@
+<div class="driver-dashboard-container">
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <div class="header-left">
+        <div class="logo-section">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 17C9 17.5304 8.78929 18.0391 8.41421 18.4142C8.03914 18.7893 7.53043 19 7 19C6.46957 19 5.96086 18.7893 5.58579 18.4142C5.21071 18.0391 5 17.5304 5 17M9 17C9 16.4696 8.78929 15.9609 8.41421 15.5858C8.03914 15.2107 7.53043 15 7 15C6.46957 15 5.96086 15.2107 5.58579 15.5858C5.21071 15.9609 5 16.4696 5 17M9 17H15M5 17H3M19 17C19 17.5304 18.7893 18.0391 18.4142 18.4142C18.0391 18.7893 17.5304 19 17 19C16.4696 19 15.9609 18.7893 15.5858 18.4142C15.2107 18.0391 15 17.5304 15 17M19 17C19 16.4696 18.7893 15.9609 18.4142 15.5858C18.0391 15.2107 17.5304 15 17 15C16.4696 15 15.9609 15.2107 15.5858 15.5858C15.2107 15.9609 15 16.4696 15 17M19 17H21M7 7H3V15H5M17 7H21V15H19M9 5C9 4.46957 9.21071 3.96086 9.58579 3.58579C9.96086 3.21071 10.4696 3 11 3H13C13.5304 3 14.0391 3.21071 14.4142 3.58579C14.7893 3.96086 15 4.46957 15 5V15H9V5Z" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="logo-text">
+            <h1>QuickRide</h1>
+            <span>Driver Dashboard</span>
+          </div>
+        </div>
+      </div>
+      <div class="header-right">
+        <button class="logout-btn" (click)="logout()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+          </svg>
+          <span>Logout</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="dashboard-main">
+    <!-- Driver Profile Card -->
+    @if (driverDetails) {
+      <section class="profile-section">
+        <div class="profile-card">
+          <div class="profile-header">
+            <div class="profile-avatar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <div class="profile-info">
+              <h2 class="profile-name">
+                {{ driverDetails.firstName }}
+                @if (driverDetails.middleName) {
+                  {{ driverDetails.middleName }}
+                }
+                {{ driverDetails.lastName }}
+              </h2>
+              <p class="profile-email">{{ driverDetails.email }}</p>
+              <div class="profile-badges">
+                <span class="profile-badge id-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2"/>
+                    <line x1="7" y1="8" x2="17" y2="8"/>
+                    <line x1="7" y1="12" x2="17" y2="12"/>
+                    <line x1="7" y1="16" x2="13" y2="16"/>
+                  </svg>
+                  ID: {{ driverDetails.driverId }}
+                </span>
+                <span class="profile-badge rating-badge">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                  {{ driverDetails.driverRating }}/5
+                </span>
+                <span class="profile-badge status-badge" [class.available]="driverDetails.driverDutyStatus === 'Available'" [class.unavailable]="driverDetails.driverDutyStatus !== 'Available'">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 6v6l4 2"/>
+                  </svg>
+                  {{ driverDetails.driverDutyStatus }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    }
+
+    <!-- Quick Stats Cards -->
+    <section class="quick-stats-section">
+      <div class="quick-stats-grid">
+        <div class="quick-stat-card total-card">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 3h18v18H3zM9 9h6v6H9z"/>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <h3 class="stat-number">{{ bookingStats.total }}</h3>
+            <p class="stat-text">Total Duties</p>
+          </div>
+        </div>
+
+        <div class="quick-stat-card completed-card">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <h3 class="stat-number">{{ bookingStats.completed }}</h3>
+            <p class="stat-text">Completed</p>
+          </div>
+        </div>
+
+        <div class="quick-stat-card pending-card">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <h3 class="stat-number">{{ bookingStats.pending }}</h3>
+            <p class="stat-text">Pending</p>
+          </div>
+        </div>
+
+        <div class="quick-stat-card progress-card">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <h3 class="stat-number">{{ bookingStats.inProgress }}</h3>
+            <p class="stat-text">In Progress</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content Grid -->
+    <section class="main-content-grid">
+      <!-- Driver Details Card -->
+      <div class="details-card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            Personal Information
+          </h3>
+        </div>
+        <div class="card-body">
+          @if (driverDetails) {
+            <div class="info-grid">
+              <div class="info-row">
+                <div class="info-field">
+                  <label>Contact Number</label>
+                  <span class="info-value">{{ driverDetails.contactNumber }}</span>
+                </div>
+                <div class="info-field">
+                  <label>Vehicle Type</label>
+                  <span class="info-value">{{ driverDetails.vehicleTypeName }}</span>
+                </div>
+              </div>
+              
+              <div class="info-row">
+                <div class="info-field">
+                  <label>Aadhaar Card Number</label>
+                  <span class="info-value">{{ driverDetails.aadhaarCardNumber || 'N/A' }}</span>
+                </div>
+                <div class="info-field">
+                  <label>Aadhaar Card</label>
+                  @if (driverDetails.aadhaarCardFileName) {
+                    <button class="view-document-btn" (click)="viewDocument(driverDetails.aadhaarCardFileName)">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10 9 9 9 8 9"/>
+                      </svg>
+                      View Document
+                    </button>
+                  } @else {
+                    <span class="info-value">N/A</span>
+                  }
+                </div>
+              </div>
+
+              <div class="info-row">
+                <div class="info-field">
+                  <label>Police Verification Expiry</label>
+                  <span class="info-value">{{ formatDate(driverDetails.policeVerificationExpiry) }}</span>
+                </div>
+                <div class="info-field">
+                  <label>Police Verification</label>
+                  @if (driverDetails.policeVerificationFileName) {
+                    <button class="view-document-btn" (click)="viewDocument(driverDetails.policeVerificationFileName)">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10 9 9 9 8 9"/>
+                      </svg>
+                      View Document
+                    </button>
+                  } @else {
+                    <span class="info-value">N/A</span>
+                  }
+                </div>
+              </div>
+
+              <div class="divider"></div>
+              <h4 class="subsection-title">Vehicle Details</h4>
+              @if (carDetails && (carDetails.carRegistrationNumber || carDetails.id)) {
+                <div class="info-row">
+                  <div class="info-field">
+                    <label>Car Registration Number</label>
+                    <span class="info-value">{{ carDetails.carRegistrationNumber || 'N/A' }}</span>
+                  </div>
+                  <div class="info-field">
+                    <label>Registration Expiry Year</label>
+                    <span class="info-value">{{ carDetails.yearOfExpire || 'N/A' }}</span>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <div class="info-field full-width">
+                    <label>Registration Card</label>
+                    @if (carDetails.registrationCardFileName) {
+                      <button class="view-document-btn" (click)="viewDocument(carDetails.registrationCardFileName)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                          <polyline points="14 2 14 8 20 8"/>
+                          <line x1="16" y1="13" x2="8" y2="13"/>
+                          <line x1="16" y1="17" x2="8" y2="17"/>
+                          <polyline points="10 9 9 9 8 9"/>
+                        </svg>
+                        View Document
+                      </button>
+                    } @else {
+                      <span class="info-value">N/A</span>
+                    }
+                  </div>
+                </div>
+              } @else {
+                <div class="no-data-message">
+                  <p>Vehicle details not available. Please contact support to add your vehicle information.</p>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Pie Chart Card -->
+      <div class="chart-card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+            Duty Distribution
+          </h3>
+        </div>
+        <div class="card-body">
+          <div class="chart-wrapper">
+            <canvas #chartCanvas id="bookingPieChart"></canvas>
+            @if (bookingStats.total === 0) {
+              <div class="no-chart-data">
+                <div class="empty-state-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 6v6l4 2"/>
+                  </svg>
+                </div>
+                <p class="empty-state-text">No Duty Records</p>
+                <p class="empty-state-subtext">Complete your first booking to see statistics</p>
+              </div>
+            } @else {
+              <div class="chart-summary">
+                <div class="summary-item">
+                  <span class="summary-label">Total:</span>
+                  <span class="summary-value">{{ bookingStats.total }}</span>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking History Section -->
+    <section class="booking-history-section">
+      <div class="history-card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            Booking History & Duty Records
+          </h3>
+        </div>
+        <div class="card-body">
+          <div class="table-wrapper">
+            @if (isLoadingHistory()) {
+              <div class="loading-container">
+                <div class="spinner-large"></div>
+                <p>Loading booking history...</p>
+              </div>
+            } @else if (bookingHistory && bookingHistory.length > 0) {
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Booking ID</th>
+                    <th>Date & Time</th>
+                    <th>Route</th>
+                    <th>Distance</th>
+                    <th>Amount</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (booking of bookingHistory; track booking.id || booking.bookingId || $index) {
+                    <tr>
+                      <td class="booking-id">#{{ booking.id || booking.bookingId || 'N/A' }}</td>
+                      <td>
+                        <div class="datetime-cell">
+                          <span class="date">{{ formatDate(booking.bookingDate || booking.createdDate || booking.date || booking.bookingDateTime) }}</span>
+                          <span class="time">{{ formatDateTime(booking.bookingTime || booking.createdTime || booking.time || booking.bookingDateTime) }}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="route-cell">
+                          <span class="route-from">{{ booking.from || booking.source || 'N/A' }}</span>
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                          </svg>
+                          <span class="route-to">{{ booking.to || booking.destination || 'N/A' }}</span>
+                        </div>
+                      </td>
+                      <td>{{ booking.distance || booking.distanceKm || 'N/A' }} km</td>
+                      <td class="amount">₹{{ booking.amount || booking.amountToPaid || booking.finalAmount || '0' }}</td>
+                      <td>
+                        <span class="payment-badge">{{ booking.paymentType || 'N/A' }}</span>
+                      </td>
+                      <td>
+                        @let status = getBookingStatus(booking);
+                        <span class="status-pill" [ngClass]="getStatusClass(status)">
+                          {{ status }}
+                        </span>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            } @else {
+              <div class="empty-state">
+                <div class="empty-state-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                </div>
+                <p class="empty-state-text">No Booking History Available</p>
+                <p class="empty-state-subtext">Your completed duties will appear here</p>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

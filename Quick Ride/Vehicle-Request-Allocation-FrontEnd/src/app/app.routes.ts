@@ -7,6 +7,7 @@ import { ForgetPassword } from './components/forget-password/forget-password';
 import { DriverHome } from './components/driver-home/driver-home';
 import { DriverLogin } from './components/driver-login/driver-login';
 import { DriverSignup } from './components/driver-signup/driver-signup';
+import { DriverDashboard } from './components/driver-dashboard/driver-dashboard';
 
 export const routes: Routes = [
 
@@ -49,6 +50,11 @@ export const routes: Routes = [
     { 
         path: 'driver-signup', 
         component: DriverSignup,
+        pathMatch: "full" 
+    },
+    { 
+        path: 'driver-dashboard', 
+        component: DriverDashboard,
         pathMatch: "full" 
     },
 

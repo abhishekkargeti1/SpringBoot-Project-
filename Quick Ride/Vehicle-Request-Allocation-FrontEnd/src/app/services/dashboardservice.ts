@@ -78,5 +78,28 @@ export class Dashboardservice {
     const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${this.authService.getToken()}` };
     return this.http.get(`${this.baseUrl}/bookingHistory/${userId}`, { headers });
   }
+
+  getDriverBookingHistory(driverId: number | string) {
+    const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${this.authService.getToken()}` };
+    return this.http.get(`${this.baseUrl}/driverBookingHistory/${driverId}`, { headers });
+  }
+
+  getDocument(fileName: string) {
+    const token = this.authService.getToken();
+    if (!token) {
+      throw new Error('No authentication token available');
+    }
+    
+    // Use the filename as-is (with spaces) as shown in the API example
+    const headers = { 
+      'Authorization': `Bearer ${token}` 
+    };
+    
+    // Request as blob for PDF/document files
+    return this.http.get(`${this.baseUrl}/documentView/${fileName}`, {
+      headers: headers,
+      responseType: 'blob'
+    });
+  }
   
 }
